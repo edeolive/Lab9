@@ -87,7 +87,20 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "eb4a337ffacd40e1b7e10ebb8778a254"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
+
+  <script>
+    window.onerror = function(m) {
+      console.log('error');
+    }
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -95,13 +108,88 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try {
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      } catch (err) {
+        output.innerHTML = 'ERROR';
+      } finally {
+        console.log('Dog');
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    class CustomError extends Error {
+      constructor(m) {
+        super(m);
+        this.name = 'CustomError';
+      }
+    }
+
+    errorBtns[0].addEventListener('click', () => {
+      console.log('Dog');
+    });
+    errorBtns[1].addEventListener('click', () => {
+      console.error('Dog');
+    });
+    errorBtns[2].addEventListener('click', () => {
+      console.count();
+    });
+    errorBtns[3].addEventListener('click', () => {
+      console.warn('Dog');
+    });
+    errorBtns[4].addEventListener('click', () => {
+      console.assert(true, 'Dog');
+    });
+    errorBtns[5].addEventListener('click', () => {
+      console.clear();
+    });
+    errorBtns[6].addEventListener('click', () => {
+      console.dir(
+          {
+            Dog: {'Poodle': 1, 'Lab': 2, 'Husky': 3}
+          }
+        );
+    });
+    errorBtns[7].addEventListener('click', () => {
+      console.dirxml(
+        {
+            Dog: {'Poodle': 1, 'Lab': 2, 'Husky': 3}
+        }
+      );
+    });
+    errorBtns[8].addEventListener('click', () => {
+      console.group();
+      console.log('Poodle');
+      console.log('Lab');
+      console.log('Husky');
+    });
+    errorBtns[9].addEventListener('click', () => {
+      console.groupEnd();
+    });
+    errorBtns[10].addEventListener('click', () => {
+      console.table(['Poodle', 'Lab', 'Husky']);
+    });
+    errorBtns[11].addEventListener('click', () => {
+      console.time();
+    });
+    errorBtns[12].addEventListener('click', () => {
+      console.timeEnd();
+    });
+    errorBtns[13].addEventListener('click', () => {
+      function foo() {
+        console.trace();
+      }
+      foo();
+    });
+    errorBtns[14].addEventListener('click', () => {
+      throw new CustomError('Dog');
+    });
+
+
   </script>
 </body>
 
